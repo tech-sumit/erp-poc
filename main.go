@@ -6,7 +6,6 @@ import (
 	"bitbucket.org/perennialsys/erp_database/connection/model"
 	"bitbucket.org/perennialsys/erp_database/connection/sql/postgresql"
 	"bitbucket.org/perennialsys/erp_database/sql/stores/store"
-	"encoding/json"
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
 	"log"
@@ -48,15 +47,7 @@ func main() {
 			return
 		}
 		if len(data) > 0 {
-			content, err := json.Marshal(data)
-			if err != nil {
-				c.JSON(400, gin.H{
-					"status": "failed",
-					"message": err.Error(),
-				})
-				return
-			}
-			c.JSON(200, content)
+			c.JSON(200, data)
 		} else {
 			c.JSON(204, gin.H{
 				"status": "No Content",
