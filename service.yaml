@@ -18,8 +18,8 @@ spec:
                ports:
                   -  containerPort: 80
                env:
-                  -  name: CACHE_HOST_URL
-                     value: "10.22.208.3:6379"
+#                  -  name: CACHE_HOST_URL
+#                     value: "10.22.208.3:6379"
                   -  name: DB_USER
                      value: "postgres"
                   -  name: DB_PASS

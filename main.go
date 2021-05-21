@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bitbucket.org/perennialsys/erp_cache/cache/marketplace"
-	cacheModel "bitbucket.org/perennialsys/erp_cache/connection/model"
 	"bitbucket.org/perennialsys/erp_database/connection/model"
 	"bitbucket.org/perennialsys/erp_database/connection/sql/postgresql"
 	"bitbucket.org/perennialsys/erp_database/sql/stores/store"
@@ -29,13 +27,13 @@ func main() {
 		return
 	}
 	storeDB := store.NewConnection(connection)
-	marketplaceCache, err := marketplace.NewConnection(&cacheModel.ConnectionMeta{
-		Host: os.Getenv("CACHE_HOST_URL"),
-	})
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+	//marketplaceCache, err := marketplace.NewConnection(&cacheModel.ConnectionMeta{
+	//	Host: os.Getenv("CACHE_HOST_URL"),
+	//})
+	//if err != nil {
+	//	log.Fatal(err)
+	//	return
+	//}
 
 	r.GET("/store", func(c *gin.Context) {
 		data, err := storeDB.GetStores(&map[string]interface{}{})
@@ -54,17 +52,17 @@ func main() {
 			})
 		}
 	})
-	r.GET("/categories", func(c *gin.Context) {
-		rawCategories, err := marketplaceCache.GetCategories(c.Request.Context(), "bukalapak")
-		if err != nil {
-			c.JSON(400, gin.H{
-				"status": "failed",
-				"message": err.Error(),
-			})
-			return
-		}
-		c.JSON(200, rawCategories)
-	})
+	//r.GET("/categories", func(c *gin.Context) {
+	//	rawCategories, err := marketplaceCache.GetCategories(c.Request.Context(), "bukalapak")
+	//	if err != nil {
+	//		c.JSON(400, gin.H{
+	//			"status": "failed",
+	//			"message": err.Error(),
+	//		})
+	//		return
+	//	}
+	//	c.JSON(200, rawCategories)
+	//})
 	err = r.Run("0.0.0.0:80")
 	if err != nil {
 		log.Fatal(err)
