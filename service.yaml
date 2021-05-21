@@ -19,13 +19,13 @@ spec:
                   -  containerPort: 80
                env:
                   -  name: CACHE_HOST_URL
-                     value: "redis.default.svc.cluster.local:6379"
+                     value: "10.22.208.3:6379"
                   -  name: DB_USER
                      value: "postgres"
                   -  name: DB_PASS
-                     value: "password"
+                     value: "M4etql6Od38gHnuH"
                   -  name: DB_HOST
-                     value: "postgres.default.svc.cluster.local"
+                     value: "cloud-auth-proxy.default.svc.cluster.local"
                   -  name: DB_PORT
                      value: "5432"
                   -  name: DB_NAME
