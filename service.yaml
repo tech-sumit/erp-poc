@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: erp-poc
+spec:
+   selector:
+      matchLabels:
+         app: erp-poc
+   template:
+      metadata:
+         labels:
+            app: erp-poc
+      spec:
+         serviceAccountName: default
+         containers:
+            -  name: erp-poc
+               image: gcr.io/formal-triode-302008/erp-poc
+               ports:
+                  -  containerPort: 80
+               env:
+                  -  name: CACHE_HOST_URL
+                     value: "redis.default.svc.cluster.local:6379"
+                  -  name: DB_USER
+                     value: "postgres"
+                  -  name: DB_PASS
+                     value: "password"
+                  -  name: DB_HOST
+                     value: "postgres.default.svc.cluster.local"
+                  -  name: DB_PORT
+                     value: "5432"
+                  -  name: DB_NAME
+                     value: "erp_db"
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: erp-poc-port
+spec:
+   type: NodePort
+   selector:
+      app: erp-poc
+   ports:
+      -  port: 80
+         targetPort: 80
+         nodePort: 30700
