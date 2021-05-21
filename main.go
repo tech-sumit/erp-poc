@@ -29,13 +29,6 @@ func main() {
 		return
 	}
 	storeDB := store.NewConnection(connection)
-	marketplaceCache, err := marketplace.NewConnection(&cacheModel.ConnectionMeta{
-		Host: os.Getenv("CACHE_HOST_URL"),
-	})
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
 
 	r.GET("/store", func(c *gin.Context) {
 		data, err := storeDB.GetStores(&map[string]interface{}{})
@@ -55,6 +48,13 @@ func main() {
 		}
 	})
 	r.GET("/categories", func(c *gin.Context) {
+		marketplaceCache, err := marketplace.NewConnection(&cacheModel.ConnectionMeta{
+			Host: os.Getenv("CACHE_HOST_URL"),
+		})
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
 		rawCategories, err := marketplaceCache.GetCategories(c.Request.Context(), "bukalapak")
 		if err != nil {
 			c.JSON(400, gin.H{
